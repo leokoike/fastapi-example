@@ -10,9 +10,6 @@ class User(BaseModel):
 
     tvshows: list["UserTVShow"] = []
 
-    class Config:
-        orm_mode = True
-
 
 class TVShow(BaseModel):
     id: int
@@ -22,15 +19,9 @@ class TVShow(BaseModel):
 
     users: list["UserTVShow"] = []
 
-    class Config:
-        orm_mode = True
-
 
 class UserTVShow(BaseModel):
     user: User | None = None
     tvshow: TVShow | None = None
     rating: int
     added_at: datetime
-
-    class Config:
-        orm_mode = True

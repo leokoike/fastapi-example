@@ -25,11 +25,9 @@ class UserTVShowSchema(Base):
     )
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id"),
-        primary_key=True,
     )
     tvshow_id: Mapped[int] = mapped_column(
         ForeignKey("tvshows.id"),
-        primary_key=True,
     )
     rating: Mapped[int] = mapped_column(Integer)
     added_at: Mapped[datetime] = mapped_column(

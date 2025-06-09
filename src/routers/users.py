@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, Query
 from fastapi_pagination import Page, paginate
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from src.authentication import authenticate
 from src.db import get_session
 from src.schemas import UserSchema, UserTVShowSchema
 from src.data import User, UserTVShow
@@ -13,7 +14,9 @@ router = APIRouter()
 
 
 @router.get(
-    "/users", response_model=Page[User], description="List all users with pagination."
+    "/users",
+    response_model=Page[User],
+    description="List all users with pagination.",
 )
 async def list_users(
     username: str = Query(
@@ -24,6 +27,7 @@ async def list_users(
         description="Filter users by email (case-insensitive)",
     ),
     session: Session = Depends(get_session),
+    _=Depends(authenticate),
 ):
     """
     List all users with pagination.
@@ -49,7 +53,11 @@ async def list_users(
     response_model=Page[UserTVShow],
     description="Get all rated TV shows to a specific user.",
 )
-async def get_user_tvshows(user_id: str, session: Session = Depends(get_session)):
+async def get_user_tvshows(
+    user_id: str,
+    session: Session = Depends(get_session),
+    _=Depends(authenticate),
+):
     """
     Get all TV shows that belong to a specific user.
     """

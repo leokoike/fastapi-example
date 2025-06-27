@@ -10,5 +10,5 @@ async def read_root() -> dict[str, str]:
 
 
 @router.get("/health", status_code=HTTPStatus.OK)
-async def health() -> dict[str, bool]:
+async def health() -> dict[str, str]:
     return {"status": "ok"}

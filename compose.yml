@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./app.db:/app/app.db
+    command: [ "uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000" ]
+    tty: true
+    stdin_open: true
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  app_data:
+    driver: local
